@@ -191,6 +191,111 @@ h2{color:#263f56}
  button,select,input{box-shadow:none!important}
 }
 
+
+/* Responsive layout patch: fluid across laptop, desktop, tablet and mobile */
+html { width: 100%; min-width: 0; overflow-x: hidden; }
+body { width: 100%; min-width: 0; overflow-x: hidden; }
+header {
+  width: 100%;
+  padding: clamp(18px, 2.4vw, 34px) clamp(16px, 3vw, 48px) !important;
+}
+header h1 { font-size: clamp(20px, 2vw, 32px) !important; line-height: 1.2; }
+header p { font-size: clamp(12px, .95vw, 15px); }
+main {
+  width: 100% !important;
+  max-width: 1680px !important;
+  margin-inline: auto !important;
+  padding: clamp(12px, 1.6vw, 26px) !important;
+}
+.panel { min-width: 0; width: 100%; }
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px !important;
+}
+.toolbar label { margin-left: 2px; }
+.toolbar input, .toolbar select, .toolbar button,
+#uploadPanel input, #uploadPanel button {
+  min-width: 0;
+  max-width: 100%;
+}
+.cards {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)) !important;
+}
+#content { min-width: 0; }
+#content .chart-grid, .chart-grid, .graphs, .charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.2vw, 20px);
+}
+#content .chart-card, .chart-card, .graph-card, .chart-panel {
+  min-width: 0;
+  max-width: 100%;
+}
+#content svg, #content canvas, #content img {
+  max-width: 100%;
+}
+.scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table { min-width: 680px; }
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tabs button { white-space: normal; }
+@media (min-width: 1500px) {
+  main { max-width: 1800px !important; }
+  .cards { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 900px) {
+  main { padding: 14px !important; }
+  .panel { padding: 15px !important; }
+  #content .chart-grid, .chart-grid, .graphs, .charts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .toolbar { align-items: stretch; }
+  .toolbar label { align-self: center; }
+}
+@media (max-width: 600px) {
+  header { padding: 18px 14px !important; }
+  header h1 { font-size: 21px !important; }
+  main { padding: 10px !important; }
+  .panel { padding: 12px !important; border-radius: 16px !important; }
+  .toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px !important;
+  }
+  .toolbar label { margin-top: 4px; }
+  .toolbar select, .toolbar input, .toolbar button {
+    width: 100%;
+    min-height: 40px;
+  }
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 9px !important;
+  }
+  .kpi { padding: 12px !important; min-height: 76px; }
+  .kpi strong { font-size: clamp(15px, 4vw, 20px) !important; overflow-wrap: anywhere; }
+  .kpi small { font-size: 10px !important; line-height: 1.35; }
+  .tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tabs button { width: 100%; padding: 9px 6px; font-size: 12px; }
+  #content h2 { font-size: 17px; line-height: 1.3; }
+  .scroll { max-height: 65vh; }
+  footer { line-height: 1.5; }
+}
+@media print {
+  main { max-width: none !important; padding: 0 !important; }
+  .toolbar, #uploadPanel { display: none !important; }
+  body { background: white !important; }
+}
+
 </style></head><body><header><small>vivo Gujarat · Retail Intelligence · V11 · Head Office</small><h1>Gujarat Sales Performance Dashboard</h1><p>Head Office intelligence · Sales performance · Workforce productivity · Outlet trends · Action priorities</p></header><main><section class="panel" id="uploadPanel"><strong>Import monthly sales workbook</strong><p class="muted">Use the three worksheets: Target, VBA Details and Activation Sales Data (with IMEI and Handset Value in INR).</p><input id="file" type="file" accept=".xlsx,.xls"/><p id="status" role="status">Ready to import workbook</p><p class="muted">Workbook required: Excel file with sheets named Target, VBA Details, and Activation Sales Data.</p></section><section class="panel"><div class="toolbar"><label for="month">Month</label><select id="month"><option value="ALL">All months</option></select><label for="zsm">ZSM</label><select id="zsm"><option value="ALL">All ZSMs</option></select><label for="exportType">Download CSV</label><select id="exportType"><option value="low">Low Productivity ISP</option><option value="ageing">All ISP & Ageing</option><option value="zsm">ZSM Sales & Target</option><option value="types">Store Type Summary</option><option value="outlets">Outlet Sales</option><option value="actions">Executable Actions</option></select><button id="csvBtn">Download CSV</button><button id="areaExport" class="primary">Generate Area HTML</button><label for="zsmExport">Individual ZSM</label><select id="zsmExport"><option value="">Select ZSM</option></select><button id="zsmExportBtn" class="primary">Generate Private ZSM HTML</button><button onclick="window.print()">Print</button></div><p class="muted">ISP: Low &lt;₹8,00,000 · Average ₹8,00,000–₹15,00,000 · Top &gt;₹15,00,000. Sr ISP separate. Amounts shown in INR, not lakhs.</p><nav class="tabs"><button data-tab="summary" class="selected">ZSM Performance</button><button data-tab="productivity">LP VBA</button><button data-tab="ageing">Tenure Performance</button><button data-tab="outlets">Outlet Category Performance</button><button data-tab="actions">Executable Actions</button></nav></section><section class="panel" id="content"></section><footer>All productivity and value gaps are review indicators, not automatic personnel decisions.</footer><p class="muted" style="text-align:center;padding:0 12px 18px">GitHub Pages ready · Excel processing runs in your browser; uploaded workbook data is not sent to a server.</p></main><script id="seed">window.__AREA_DATA__=null;</script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script>'use strict';
 const $=id=>document.getElementById(id),clean=x=>String(x??'').trim(),norm=x=>clean(x).toLowerCase().replace(/[^a-z0-9]/g,''),esc=x=>clean(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),fmt=x=>x==null?'N/A':Number(x).toLocaleString('en-IN',{maximumFractionDigits:0}),inr=x=>x==null?'N/A':'₹'+fmt(x),pct=x=>x==null?'N/A':x.toFixed(1)+'%',cash=x=>{if(x===null||x===undefined||clean(x)==='')return null;let n=Number(String(x).replace(/[₹,\s]/g,''));return Number.isFinite(n)?n:null};
 const get=(r,...names)=>{for(const n of names){const k=Object.keys(r).find(k=>norm(k)===norm(n));if(k!==undefined&&r[k]!==''&&r[k]!=null)return r[k]}return ''};
