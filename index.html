@@ -312,7 +312,7 @@ body.auth-locked main,body.auth-locked header{visibility:hidden}
  <section class="auth-card" aria-labelledby="loginTitle">
   <div style="font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:#168a98;font-weight:800">vivo Gujarat · Gujarat Dashboard</div>
   <h2 id="loginTitle">Retail Intelligence Login</h2>
-  <p>Sign in with your authorized work account. Access is granted according to your assigned HO, ZSM, ASM or CM role.</p>
+  <p>Sign in with your authorized work account. ZSM accounts are restricted to their assigned ZSM data. Sign in with your authorized work account.</p>
   <form id="loginForm">
    <label for="loginEmail">Work email</label><input id="loginEmail" type="email" autocomplete="username" required placeholder="name@company.com">
    <label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter password">
@@ -464,6 +464,25 @@ const logoutBtn = document.getElementById("logoutBtn");
 const sessionBar = document.getElementById("sessionBar");
 let auth, db, initialized = false;
 
+// Authorized ZSM email-to-scope mapping. Firebase Authentication accounts still
+// need to be created by an administrator; this mapping never stores passwords.
+const ZSM_EMAIL_ACCESS = {
+  "haresh.kava@vivogujarat.com": "Hareshkumar B Kava",
+  "altaf.sarvaiya@vivogujarat.com": "Altaf Sarvaiya",
+  "deep.shah@vivogujarat.com": "Shah Deep N",
+  "yagnesh.kothari@vivogujarat.com": "Yagnesh K Kothari",
+  "manoj.bisht@vivogujarat.com": "Manoj Singh Bisht",
+  "pratik.jain@vivogujarat.com": "Jain Pratik P",
+  "nishant.poddar@vivogujarat.com": "Nishant Poddar",
+  "dharamvijaysinh.vaghela@vivogujarat.com": "Dharmavijaysinh A Vaghela",
+  "shrikant.dave@vivogujarat.com": "Shrikant M Dave",
+  "zsmpratik.joshi@vivogujarat.com": "Pratik Vinodkumar Joshi",
+  "uvesh.kazi@vivogujarat.com": "Kazi Mohmaduvesh",
+  "narendra.jadeja@vivogujarat.com": "Narendrasinh Himatsinh Jadeja",
+  "asad.pathan@vivogujarat.com": "Pathan Asad Haiderkhan",
+  "mohammed.bashir@vivogujarat.com": "Mohammed Bashir M Divker"
+};
+
 function showError(message) { errorBox.textContent = message; }
 function lock(message = "") {
   document.body.classList.add("auth-locked");
@@ -495,11 +514,21 @@ async function handleUser(user) {
     return;
   }
   try {
+    const email = String(user.email || "").trim().toLowerCase();
+    const mappedZsm = ZSM_EMAIL_ACCESS[email];
     const dbSdk = window.__FIREBASE_SDK__;
-    if (!dbSdk?.getDoc || !dbSdk?.doc) throw new Error("Firebase database SDK is not ready. Refresh the page and check your connection.");
-    const snap = await dbSdk.getDoc(dbSdk.doc(db, "users", user.uid));
-    if (!snap.exists()) throw new Error("No role profile found for this account. Ask the administrator to provision your access.");
-    unlock(user, snap.data());
+    let profile = null;
+    // For the listed ZSM accounts, use the email-to-scope mapping directly;
+    // do not depend on a Firestore profile read to establish the UI filter.
+    if (!mappedZsm && dbSdk?.getDoc && dbSdk?.doc) {
+      const snap = await dbSdk.getDoc(dbSdk.doc(db, "users", user.uid));
+      if (snap.exists()) profile = snap.data();
+    }
+    // The explicit email allowlist determines ZSM scope, so a conflicting
+    // Firestore zsm field cannot broaden an allowlisted ZSM's dashboard view.
+    if (mappedZsm) profile = { role: "ZSM", zsm: mappedZsm, active: true };
+    if (!profile) throw new Error("No role profile found for this account. Ask the administrator to provision your access.");
+    unlock(user, profile);
   } catch (err) {
     await window.__FIREBASE_SDK__?.signOut?.(auth).catch(()=>{});
     lock(err.message || "Could not verify your role. Please try again.");
@@ -567,8 +596,22 @@ logoutBtn.addEventListener("click", async () => { if (auth && window.__FIREBASE_
       const zsmSelect=document.getElementById('zsm');
       if(zsmSelect){
         zsmSelect.disabled=true;
-        if(role==='ZSM' && u.zsm) zsmSelect.value=u.zsm;
-        else zsmSelect.value='ALL';
+        if(role==='ZSM' && u.zsm){
+          zsmSelect.value=u.zsm;
+          // Filter every in-memory dashboard dataset to this ZSM, not just the selector.
+          if(DATA){
+            const source=MASTER_DATA||DATA, selected=String(u.zsm), selectedNorm=norm(selected);
+            const own=r=>norm(r.zsm||r.name)===selectedNorm;
+            DATA={...source,
+              people:(source.people||[]).filter(own),
+              zsm:(source.zsm||[]).filter(own),
+              out:(source.out||[]).filter(own),
+              types:(source.types||[]).filter(own),
+              pending:(source.pending||[]).filter(own),
+              lockedZsm:selected
+            };
+          }
+        } else zsmSelect.value='ALL';
       }
       // Prevent lower roles from exporting the entire area report.
       const type=document.getElementById('exportType');

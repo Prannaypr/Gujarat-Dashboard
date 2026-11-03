@@ -1,34 +1,27 @@
-# Gujarat Sales Performance Dashboard — Firebase Hosting
+# Gujarat Sales Dashboard — ZSM login update
 
-This bundle preserves the uploaded dashboard HTML, including its existing Firebase Authentication configuration, and targets Firebase project `gujarat-dashboard-cd680`.
+This bundle targets Firebase project `gujarat-dashboard-cd680` and includes the updated dashboard as `index.html`.
 
-## Files
-- `index.html` — dashboard
-- `firebase.json` — Firebase Hosting configuration
-- `.firebaserc` — default Firebase project
-- `.github/workflows/firebase-hosting.yml` — deploys to the live Hosting channel when code is pushed to `main`
+## Included changes
+- Added the 14 supplied work email addresses to the ZSM access mapping.
+- Each mapped account is assigned a fixed ZSM scope and the ZSM selector is locked to that name.
+- Hides the HO workbook upload and area-wide ZSM selection controls for ZSM users.
+- The HTML does not store or validate passwords. Authentication still uses Firebase Email/Password.
 
-## Deploy through Firebase Console (recommended)
-1. Open Firebase Console and select `gujarat-dashboard-cd680`.
-2. Open **Hosting** and choose **Get started** / **Set up GitHub action**.
-3. Connect the GitHub repository where these files are committed and select the `main` branch.
-4. If Firebase generates its own workflow, review it before keeping both workflows; avoid duplicate deploy workflows.
-5. Commit and push these files. Confirm the GitHub Actions run succeeds, then open the Hosting URL shown in Firebase Console.
+## Important setup steps
+1. In Firebase Console → Authentication → Sign-in method, enable **Email/Password**.
+2. In Firebase Console → Authentication → Users, create each of the 14 accounts using the email in `ZSM-ACCOUNT-SETUP.csv` and the initial password you specified. Do not put the password in GitHub or in the HTML source.
+3. Require every user to change the initial password after first sign-in; a shared default password is only for onboarding.
+4. Deploy `index.html` to the existing GitHub repository's root and push to `main` to trigger the included Firebase Hosting workflow.
 
-## If using the included GitHub Actions workflow
-1. Commit these files to the root of the repository on branch `main`.
-2. In GitHub, open **Settings → Secrets and variables → Actions → New repository secret**.
-3. Add secret named `FIREBASE_SERVICE_ACCOUNT_GUJARAT_DASHBOARD_CD680` containing a Firebase service-account JSON key with only the permissions needed to deploy Hosting.
-4. Push to `main`, then check the **Actions** tab for deployment status.
+## Data availability limitation
+The current HTML reads an Excel workbook locally in the browser and does not publish the HO-uploaded workbook to other users or persist it in Firebase. ZSM accounts therefore will not automatically receive the HO's workbook just because they can log in. To share current sales data across devices, add a secure shared data source (for example, Firestore/Cloud Storage with server-enforced access rules) or safely embed a published dataset before rollout.
 
-Never put a service-account key in this repository or in `index.html`.
+## Security limitation
+The ZSM email-to-scope mapping and browser filters improve the UI experience but are **not a server-side security boundary**. A user who receives the complete workbook or can inspect/modify the client code may access data outside the UI filter. Do not put confidential cross-ZSM data in the client unless access is enforced by Firestore Security Rules or a trusted backend. For production, create authoritative `users/{uid}` profiles and enforce access on the data source.
 
-## Authentication and security notes
-- The HTML keeps its existing Firebase Web App configuration and sign-in flow.
-- Firebase Authentication must have **Email/Password** enabled, and authorized users must exist in Authentication.
-- The app expects a Firestore document at `users/{uid}` with an active role profile (`role` must be `HO`, `ZSM`, `ASM`, or `CM`; `active` must be `true`).
-- Client-side role filtering is not a security boundary. Before storing or serving confidential sales data from Firestore, enforce access using Firestore Security Rules. The current workbook processing happens in the user's browser.
-- A successful Hosting deployment does not automatically configure Authentication providers, Firestore profiles, or security rules.
+## GitHub deployment workflow
+The included `.github/workflows/firebase-hosting.yml` expects the repository secret:
+`FIREBASE_SERVICE_ACCOUNT_GUJARAT_DASHBOARD_CD680`
 
-## Important
-This package prepares deployment files; it does not itself publish to Firebase. Live deployment requires the repository to be connected/authorized and the GitHub Action to run successfully.
+If that secret has not been configured, the GitHub workflow will fail until an administrator adds the Firebase service-account JSON as a GitHub Actions secret.
