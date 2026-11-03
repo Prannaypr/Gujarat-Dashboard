@@ -1,0 +1,301 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gujarat Sales Intelligence Dashboard</title><style>*{box-sizing:border-box}body{margin:0;font:14px system-ui,Arial;color:#20344a;background:#f2f6fa}header{background:linear-gradient(115deg,#092c59,#127bb7);color:white;padding:24px max(16px,calc((100vw - 1280px)/2))}header h1{margin:4px 0;font-size:25px}header p{margin:4px 0;opacity:.85}main{max-width:1280px;margin:auto;padding:16px}.panel{background:white;border:1px solid #dbe4ed;border-radius:12px;padding:17px;margin-bottom:15px;box-shadow:0 2px 9px #092c5910}.toolbar,.tabs{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:10px 0}button,select,input{border:1px solid #b9cbd9;border-radius:7px;padding:9px 12px;font:inherit;background:white;color:#153b62;max-width:100%}button{cursor:pointer}button.selected,.primary{background:#126ba4;color:white;border-color:#126ba4}label{font-weight:600}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin:12px 0 20px}.kpi{border:1px solid #dfe8f0;border-radius:9px;padding:13px;background:#f8fbfd;min-height:83px}.kpi small{display:block;color:#567188;font-size:12px}.kpi strong{font-size:20px;display:block;margin-top:8px}.scroll{overflow:auto;max-height:540px}table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}th{position:sticky;top:0;background:#eaf2fa;text-align:left}th,td{border-bottom:1px solid #e5edf4;padding:9px}tr:hover td{background:#f8fbff}.muted{font-size:12px;color:#6a7e91}.empty{padding:45px;text-align:center;color:#657d90}h2{font-size:18px;margin-top:20px}#status{color:#21638b}footer{font-size:12px;color:#60788c;margin:22px 0}
+/* Professional executive dashboard theme */
+:root{color-scheme:light;--navy:#14263d;--accent:#087e8b;--line:#dce5ed;--muted:#64748b}
+body{background:radial-gradient(ellipse at 88% 0%,#dbeaf2 0%,transparent 36%),linear-gradient(145deg,#f2f5f9,#e9eff5 65%,#f7f9fb);color:#1c2e43;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;min-height:100vh}
+header{background:linear-gradient(110deg,#102238 0%,#1a3c57 64%,#176778 100%);border-bottom:3px solid #28a2a8;box-shadow:0 8px 28px #132f4b22}
+header h1{font-weight:720;letter-spacing:-.6px}header small{letter-spacing:1.1px;text-transform:uppercase;opacity:.78}
+main{max-width:1420px;padding:22px 20px}.panel{border:1px solid #dce5ed;border-radius:14px;box-shadow:0 5px 24px #10243b0a;background:#ffffffed;padding:20px;margin-bottom:18px}
+.kpi{background:linear-gradient(150deg,#fff,#f5f9fc);border:1px solid #dce6ef;border-left:3px solid #168a98;border-radius:10px;padding:17px;box-shadow:0 2px 9px #193b5108}
+.kpi strong{color:#142f49;font-size:22px}.kpi small{color:#587082;font-weight:600}
+button,select,input{border-color:#c9d6e1;border-radius:8px}button{transition:background .15s,border-color .15s}button:hover{border-color:#168a98;background:#e8f5f6}button.selected,.primary,button.selected:hover,.primary:hover{background:#166879;color:white;border-color:#166879}
+.tabs{border-bottom:1px solid #dce5ed;padding-bottom:12px;gap:8px}.tabs button{font-weight:600}
+th{background:#eaf2f6;color:#244358;text-transform:uppercase;letter-spacing:.25px;font-size:11px}td{color:#314459}tr:hover td{background:#f0f8fa}
+h2{color:#17334b;font-weight:700}footer{color:#637a8a}
+@media(max-width:700px){header{padding:20px 16px}main{padding:12px}.panel{padding:13px}.kpi strong{font-size:18px}}
+
+/* Executive sales intelligence refresh */
+:root{--ink:#172b43;--navy:#102b46;--blue:#1f5f91;--teal:#087e8b;--line:#e1e8ef;--muted:#708195;--surface:#fff;--soft:#f6f9fc}
+*{box-sizing:border-box}
+body{background:#f4f7fb;color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;letter-spacing:.05px}
+header{padding:27px max(18px,calc((100vw - 1440px)/2));background:linear-gradient(112deg,#10243a 0%,#173d5a 58%,#176b72 100%);border:0;box-shadow:0 8px 28px #102b4617;position:relative;overflow:hidden}
+header:after{content:"";position:absolute;right:-75px;top:-145px;width:360px;height:360px;border:1px solid #ffffff1b;border-radius:50%;box-shadow:0 0 0 34px #ffffff08,0 0 0 72px #ffffff06;pointer-events:none}
+header small{font-size:10px;font-weight:700;letter-spacing:1.8px;color:#b8d8e2}
+header h1{font-size:clamp(22px,2.4vw,31px);line-height:1.2;letter-spacing:-.8px;margin:9px 0 8px;font-weight:750}
+header p{font-size:13px;color:#d5e3eb;max-width:760px}
+main{max-width:1480px;padding:23px clamp(12px,2vw,28px)}
+.panel{background:#fff;border:1px solid #e2e9f0;border-radius:15px;box-shadow:0 3px 15px #19354e08;padding:21px;margin-bottom:18px}
+#uploadPanel{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fbfdff;border-style:dashed}
+#uploadPanel p{margin:4px 0}
+.toolbar{gap:8px 10px;margin:0 0 14px}
+.toolbar label{font-size:11px;color:#687b8e;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+button,select,input{font:inherit;font-size:12px;border:1px solid #d4dee8;border-radius:8px;padding:10px 12px;background:#fff;color:#203a53;outline:none}
+select:focus,input:focus,button:focus-visible{border-color:#20818b;box-shadow:0 0 0 3px #20818b1a}
+button{font-weight:650;transition:all .15s ease}
+button:hover{background:#f0f7f8;border-color:#8bbcc0;transform:translateY(-1px)}
+button.selected,.primary,button.selected:hover,.primary:hover{background:#173f5b;color:#fff;border-color:#173f5b}
+.tabs{border:0;background:#f4f7fa;border-radius:10px;padding:5px;gap:4px;margin:18px 0 0}
+.tabs button{border:0;background:transparent;color:#607286;padding:10px 14px;border-radius:7px}
+.tabs button.selected{background:#fff;color:#173f5b;box-shadow:0 1px 5px #132f4b15}
+.cards{grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin:16px 0 25px}
+.kpi{position:relative;min-height:112px;background:#fff;border:1px solid #e2e9f0;border-radius:12px;padding:17px 18px;box-shadow:0 2px 9px #18375005;border-left:1px solid #e2e9f0}
+.kpi:before{content:"";position:absolute;top:0;left:16px;right:16px;height:3px;border-radius:0 0 4px 4px;background:#25858b}
+.kpi small{font-size:11px;line-height:1.4;color:#718195;font-weight:700;text-transform:uppercase;letter-spacing:.55px}
+.kpi strong{font-size:clamp(19px,2vw,25px);font-weight:750;letter-spacing:-.5px;color:#152e47;margin-top:13px;line-height:1.1;overflow-wrap:anywhere}
+h2{font-size:16px;letter-spacing:-.25px;color:#1b3852;margin:25px 0 13px;font-weight:750}
+h2:first-child{margin-top:8px}
+.muted{color:#7b8b9b;font-size:11px;line-height:1.55}
+.scroll{border:1px solid #e4ebf1;border-radius:10px;max-height:560px}
+table{font-size:12px;white-space:nowrap}
+th{top:0;background:#f0f5f8;color:#607286;font-size:10px;letter-spacing:.55px;padding:12px 13px;border-bottom:1px solid #dce6ee}
+td{padding:11px 13px;color:#334a60;border-bottom:1px solid #edf1f5}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:#f7fafc}
+.chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.chart-card{border:1px solid #e3eaf0;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);padding:17px;min-width:0}
+.chart-title{font-size:13px;font-weight:750;color:#203b54;margin-bottom:4px}
+.chart-subtitle{font-size:11px;color:#7b8b9b;margin-bottom:16px}
+.bar-list{display:flex;flex-direction:column;gap:12px}
+.bar-row{display:grid;grid-template-columns:minmax(78px,130px) minmax(30px,1fr) auto;gap:9px;align-items:center;font-size:11px}
+.bar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#53677b}
+.bar-track{height:9px;background:#edf2f6;border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#1c658d,#168d91);min-width:2px}
+.bar-value{font-size:11px;color:#2b465e;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:#718195;margin-top:12px}
+.legend span:before{content:"";display:inline-block;width:7px;height:7px;border-radius:2px;background:#16858e;margin-right:5px}
+.empty{padding:55px 18px;text-align:center;color:#718195}
+footer{padding:4px 2px 20px;font-size:11px;color:#8795a3}
+@media(max-width:760px){header{padding:21px 16px}main{padding:12px}.panel{padding:14px}.chart-grid{grid-template-columns:1fr}.bar-row{grid-template-columns:90px minmax(25px,1fr) auto}.kpi{min-height:96px;padding:15px}.tabs{overflow-x:auto;flex-wrap:nowrap}.tabs button{white-space:nowrap}.toolbar>*{max-width:100%}#uploadPanel{align-items:flex-start;flex-direction:column}}
+@media print{body{background:white}header{box-shadow:none}button,input,select,#uploadPanel{display:none!important}.panel{box-shadow:none;break-inside:avoid}.chart-grid{grid-template-columns:1fr 1fr}}
+
+
+/* Neumorphism UI — soft raised surfaces, inset controls, quiet enterprise palette */
+:root{
+ --neo-bg:#e9eef4;--neo-light:#ffffff;--neo-shadow:#c8d0da;--neo-ink:#24384d;
+ --neo-muted:#728196;--neo-accent:#1b7e87;--neo-accent-soft:#dcebed;--neo-line:#dce3eb;
+ color-scheme:light
+}
+html{background:var(--neo-bg)}
+body{
+ background:linear-gradient(145deg,#eef2f7 0%,#e7edf4 100%);
+ color:var(--neo-ink);
+ font-family:Inter,"Segoe UI",Arial,sans-serif
+}
+header{
+ background:linear-gradient(135deg,#eaf0f6,#e1e8f0);
+ color:var(--neo-ink);
+ border:0;
+ box-shadow:8px 8px 18px #cbd3dd,-8px -8px 18px #fff;
+ border-radius:0 0 26px 26px;
+ position:relative;
+ overflow:hidden
+}
+header:after{
+ border-color:#fff9;
+ box-shadow:0 0 0 34px #ffffff36,0 0 0 72px #cbd5df24
+}
+header small{color:#718397;opacity:1}
+header h1{color:#1b3047}
+header p{color:#687b8f;opacity:1}
+main{max-width:1480px}
+.panel{
+ background:linear-gradient(145deg,#f1f5fa,#e8edf4);
+ border:1px solid #f8fbff;
+ border-radius:20px;
+ box-shadow:8px 8px 18px #cbd3dd,-8px -8px 18px #fff;
+ padding:21px
+}
+#uploadPanel{background:linear-gradient(145deg,#f1f5fa,#e8edf4);border:1px dashed #c3cdd8}
+button,select,input{
+ color:#33495f;
+ background:linear-gradient(145deg,#f2f6fb,#e7edf4);
+ border:1px solid #e8eef5;
+ border-radius:12px;
+ box-shadow:4px 4px 8px #cbd3dd,-4px -4px 8px #fff;
+ transition:box-shadow .16s ease,transform .16s ease,background .16s ease;
+}
+button:hover{
+ background:linear-gradient(145deg,#e7eef5,#f2f6fb);
+ border-color:#dce5ee;
+ box-shadow:2px 2px 4px #cbd3dd,-2px -2px 4px #fff;
+ transform:translateY(-1px)
+}
+button:active,button.selected,button.selected:hover,.primary,.primary:hover{
+ color:#fff;
+ background:linear-gradient(145deg,#218994,#146a75);
+ border-color:#1b7e87;
+ box-shadow:inset 3px 3px 6px #10555d,inset -3px -3px 6px #2ba3ad;
+ transform:none
+}
+select:focus,input:focus,button:focus-visible{
+ outline:none;border-color:#86bfc3;box-shadow:inset 3px 3px 6px #cbd3dd,inset -3px -3px 6px #fff,0 0 0 3px #1b7e8715
+}
+.tabs{
+ background:linear-gradient(145deg,#e4eaf1,#edf2f8);
+ border:1px solid #f7faff;
+ border-radius:16px;
+ padding:7px;
+ box-shadow:inset 4px 4px 8px #cbd3dd,inset -4px -4px 8px #fff
+}
+.tabs button{box-shadow:none;background:transparent;border:0;color:#718196}
+.tabs button:hover{box-shadow:none;background:#e8eef5;transform:none}
+.tabs button.selected{
+ color:#1b6c75;background:linear-gradient(145deg,#f7faff,#e6edf4);
+ border:1px solid #f5f8fc;
+ box-shadow:3px 3px 7px #cbd3dd,-3px -3px 7px #fff
+}
+.kpi{
+ background:linear-gradient(145deg,#f4f7fb,#e7edf4);
+ border:1px solid #f8fbff;border-radius:17px;
+ box-shadow:6px 6px 12px #cbd3dd,-6px -6px 12px #fff;
+ padding:18px
+}
+.kpi:before{left:18px;right:18px;height:3px;background:linear-gradient(90deg,#1b7e87,#8bbfc2);opacity:.9}
+.kpi small{color:#77879a}
+.kpi strong{color:#20374e}
+.chart-card{
+ background:linear-gradient(145deg,#f2f6fa,#e8eef5);
+ border:1px solid #f8fbff;border-radius:17px;
+ box-shadow:6px 6px 12px #cbd3dd,-6px -6px 12px #fff;
+ padding:18px
+}
+.bar-track{
+ background:#e5ebf2;
+ box-shadow:inset 3px 3px 5px #cbd3dd,inset -3px -3px 5px #fff;
+ border-radius:99px
+}
+.bar-fill{background:linear-gradient(90deg,#1a7581,#40a0a5);box-shadow:0 1px 3px #1b7e8730}
+.scroll{
+ border:1px solid #f7faff;border-radius:15px;
+ box-shadow:inset 3px 3px 7px #d1d9e2,inset -3px -3px 7px #fff;
+ background:#edf2f7
+}
+table{border-collapse:separate;border-spacing:0}
+th{background:#e5ebf2;color:#65768a;border-bottom:1px solid #d8e0e9}
+td{background:transparent;color:#354b61;border-bottom:1px solid #dce4ec}
+tr:hover td{background:#e5edf4}
+tr:last-child td{border-bottom:0}
+h2{color:#263f56}
+.muted,footer{color:#7b899a}
+#status{color:#247680}
+.empty{color:#718196}
+@media(max-width:760px){
+ header{border-radius:0 0 20px 20px}
+ .panel{border-radius:16px;padding:14px;box-shadow:5px 5px 11px #cbd3dd,-5px -5px 11px #fff}
+ .kpi{box-shadow:4px 4px 9px #cbd3dd,-4px -4px 9px #fff}
+ .chart-card{box-shadow:4px 4px 9px #cbd3dd,-4px -4px 9px #fff}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+ body{background:white}
+ header,.panel,.kpi,.chart-card{box-shadow:none!important;background:white!important;border:1px solid #ddd!important}
+ button,select,input{box-shadow:none!important}
+}
+
+</style></head><body><header><small>vivo Gujarat · Retail Intelligence · V11 · Head Office</small><h1>Gujarat Sales Performance Dashboard</h1><p>Head Office intelligence · Sales performance · Workforce productivity · Outlet trends · Action priorities</p></header><main><section class="panel" id="uploadPanel"><strong>Import monthly sales workbook</strong><p class="muted">Use the three worksheets: Target, VBA Details and Activation Sales Data (with IMEI and Handset Value in INR).</p><input id="file" type="file" accept=".xlsx,.xls"/><p id="status" role="status">Ready to import workbook</p><p class="muted">Workbook required: Excel file with sheets named Target, VBA Details, and Activation Sales Data.</p></section><section class="panel"><div class="toolbar"><label for="month">Month</label><select id="month"><option value="ALL">All months</option></select><label for="zsm">ZSM</label><select id="zsm"><option value="ALL">All ZSMs</option></select><label for="exportType">Download CSV</label><select id="exportType"><option value="low">Low Productivity ISP</option><option value="ageing">All ISP & Ageing</option><option value="zsm">ZSM Sales & Target</option><option value="types">Store Type Summary</option><option value="outlets">Outlet Sales</option><option value="actions">Executable Actions</option></select><button id="csvBtn">Download CSV</button><button id="areaExport" class="primary">Generate Area HTML</button><label for="zsmExport">Individual ZSM</label><select id="zsmExport"><option value="">Select ZSM</option></select><button id="zsmExportBtn" class="primary">Generate Private ZSM HTML</button><button onclick="window.print()">Print</button></div><p class="muted">ISP: Low &lt;₹8,00,000 · Average ₹8,00,000–₹15,00,000 · Top &gt;₹15,00,000. Sr ISP separate. Amounts shown in INR, not lakhs.</p><nav class="tabs"><button data-tab="summary" class="selected">ZSM Performance</button><button data-tab="productivity">LP VBA</button><button data-tab="ageing">Tenure Performance</button><button data-tab="outlets">Outlet Category Performance</button><button data-tab="actions">Executable Actions</button></nav></section><section class="panel" id="content"></section><footer>All productivity and value gaps are review indicators, not automatic personnel decisions.</footer><p class="muted" style="text-align:center;padding:0 12px 18px">GitHub Pages ready · Excel processing runs in your browser; uploaded workbook data is not sent to a server.</p></main><script id="seed">window.__AREA_DATA__=null;</script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script>'use strict';
+const $=id=>document.getElementById(id),clean=x=>String(x??'').trim(),norm=x=>clean(x).toLowerCase().replace(/[^a-z0-9]/g,''),esc=x=>clean(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),fmt=x=>x==null?'N/A':Number(x).toLocaleString('en-IN',{maximumFractionDigits:0}),inr=x=>x==null?'N/A':'₹'+fmt(x),pct=x=>x==null?'N/A':x.toFixed(1)+'%',cash=x=>{if(x===null||x===undefined||clean(x)==='')return null;let n=Number(String(x).replace(/[₹,\s]/g,''));return Number.isFinite(n)?n:null};
+const get=(r,...names)=>{for(const n of names){const k=Object.keys(r).find(k=>norm(k)===norm(n));if(k!==undefined&&r[k]!==''&&r[k]!=null)return r[k]}return ''};
+const iso=v=>{if(v===null||v===undefined||v==='')return '';if(typeof v==='number'){let d=new Date(Date.UTC(1899,11,30)+Math.floor(v)*86400000);return d.toISOString().slice(0,10)}let s=clean(v);if(/^\d{4}-\d\d-\d\d/.test(s))return s.slice(0,10);let m=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);if(m)return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;let d=new Date(s);return isNaN(d)?'':d.toISOString().slice(0,10)};
+const role=x=>{let n=norm(x);return ['isp','vba'].includes(n)?'ISP':['srisp','srvba','seniorisp'].includes(n)?'Sr ISP':['zsm','asm','cm'].includes(n)?n.toUpperCase():clean(x)};
+const ageBands=['Below 3 months','3 to 6 months','6 to 12 months','1 to 3 years','3 to 5 years','5 to 7 years','Above 7 years'];
+function age(doj,month){if(!doj)return 'DOJ missing';let end=new Date(month+'-01T00:00:00Z');end=new Date(Date.UTC(end.getUTCFullYear(),end.getUTCMonth()+1,0));let start=new Date(doj+'T00:00:00Z');if(start>end)return 'Future DOJ';let n=(end.getUTCFullYear()-start.getUTCFullYear())*12+end.getUTCMonth()-start.getUTCMonth()-(end.getUTCDate()<start.getUTCDate()?1:0);return n<3?ageBands[0]:n<6?ageBands[1]:n<12?ageBands[2]:n<36?ageBands[3]:n<60?ageBands[4]:n<84?ageBands[5]:ageBands[6]}
+const grade=x=>x==null?'No mapped sales':x<800000?'Low':x<=1500000?'Average':'Top';
+function parseWorkbook(w){let master=w['VBA Details']||[],tx=w['Activation Sales Data']||[],targets=w.Target||[];if(!master.length&&!tx.length)throw Error('VBA Details and Activation Sales Data are empty');let people=new Map(),byName=new Map(),zsmNames=new Map(),stores=new Map(),sales=new Map(),pending=new Map(),months=new Set(),seen=new Set(),roleTargets=[],warnings=[];const cname=n=>zsmNames.get(norm(n))||clean(n)||'Unmapped ZSM';
+for(let r of master){let id=clean(get(r,'V-Work ID','V Work ID')),name=clean(get(r,'ISP Name','Name'));if(!id)continue;let p={id,name,role:role(get(r,'Role')),status:clean(get(r,'Status')),doj:iso(get(r,'Date Of Joining','DOJ')),md:clean(get(r,'MD Name')),zsm:clean(get(r,'ZSM')),asm:clean(get(r,'ASM')),cm:clean(get(r,'CM')),type:clean(get(r,'Store Type','Outlet Type')),target:cash(get(r,'Target','Monthly Value Target (INR)'))};people.set(id,p);if(name)byName.set(norm(name),p);if(p.zsm)zsmNames.set(norm(p.zsm),p.zsm)}
+for(let r of targets){let rl=role(get(r,'Role')),name=clean(get(r,'Name','ZSM Name','Employee Name')),id=clean(get(r,'V-Work ID','V Work ID')),value=cash(get(r,'Monthly Value Target (INR)','Target Value (INR)','Target Value','Target Value INR','Target'));if(value==null||value<=0)continue;roleTargets.push({role:rl,name,id,value});if(rl==='ZSM'&&name)zsmNames.set(norm(name),name)}
+const matchZsm=(n)=>{let exact=roleTargets.find(t=>t.role==='ZSM'&&norm(t.name)===norm(n));if(exact)return exact;let matches=roleTargets.filter(t=>t.role==='ZSM'&&t.name&&norm(t.name.split(/\s+/)[0])===norm(clean(n).split(/\s+/)[0]));return matches.length===1?matches[0]:null};
+let quality={rows:tx.length,duplicateIMEI:0,missingIMEI:0,missingValue:0,unmappedEmployee:0};
+for(let r of tx){let imei=clean(get(r,'IMEI','IMEI 1','IMEI Number')).replace(/\s/g,''),id=clean(get(r,'V Work ID','V-Work ID','Employee ID')),reporter=clean(get(r,'Reporter','ISP Name')),p=people.get(id)||byName.get(norm(reporter)),z=cname(get(r,'ZSM')||p?.zsm),code=clean(get(r,'Store Code')),name=clean(get(r,'Store Name')),type=clean(get(r,'Outlet Type','Store Type'))||p?.type||'Unspecified',md=clean(get(r,'MD Name'))||p?.md,act=iso(get(r,'Activation Date','Activated Date')),upload=iso(get(r,'Upload Date','DMS Upload Date')),value=cash(get(r,'Handset Value (INR)','Handset Value','Handset Value INR','Sales Value (INR)')),ref=act||upload,month=ref?ref.slice(0,7):'';
+if(!imei){quality.missingIMEI++;}else if(seen.has(imei)){quality.duplicateIMEI++;continue}else seen.add(imei);
+if(!month)continue;months.add(month);let key=month+'|'+z;let pen=pending.get(key)||{month,zsm:z,nonUploaded:0};if(!upload)pen.nonUploaded++;pending.set(key,pen);
+if(!act)continue;
+if(value==null){quality.missingValue++;continue}
+let sk=month+'|'+(p?.id||id);if(p&&['ISP','Sr ISP'].includes(p.role))sales.set(sk,(sales.get(sk)||0)+value);else quality.unmappedEmployee++;
+let storeKey=month+'|'+norm(z)+'|'+(code||norm(name)||norm(md)||'unknown');let o=stores.get(storeKey)||{month,code,name,md,zsm:z,type,value:0,imei:0,staff:new Set()};o.value+=value;o.imei++;if(p&&['ISP','Sr ISP'].includes(p.role))o.staff.add(p.id);stores.set(storeKey,o)}
+let ms=[...months].sort().reverse();let roster=[];for(let m of ms)for(let p of people.values()){if(!['ISP','Sr ISP'].includes(p.role))continue;let k=m+'|'+p.id,v=sales.has(k)?sales.get(k):null;roster.push({...p,month:m,value:v,grade:p.role==='ISP'?grade(v):'Sr ISP',age:age(p.doj,m)})}
+let zsmMap=new Map();for(let o of stores.values()){let k=o.month+'|'+o.zsm,rec=zsmMap.get(k)||{month:o.month,name:o.zsm,value:0,target:null,ach:null};rec.value+=o.value;zsmMap.set(k,rec)}
+for(let [k,pen] of pending){if(!zsmMap.has(k))zsmMap.set(k,{month:pen.month,name:pen.zsm,value:0,target:null,ach:null})}
+let zs=[...zsmMap.values()];for(let z of zs){let t=matchZsm(z.name);if(t){z.target=t.value;z.ach=z.value/t.value*100}}
+let out=[...stores.values()].map(o=>({...o,staffCount:o.staff.size,staff:undefined}));
+let typeCounts=new Map();for(let m of ms)for(let p of people.values()){if(!['ISP','Sr ISP'].includes(p.role)||/^(inactive|resigned|left|terminated)$/i.test(p.status))continue;let key=m+'|'+norm(p.zsm)+'|'+norm(p.type||'Unspecified'),rec=typeCounts.get(key)||{month:m,zsm:cname(p.zsm),type:p.type||'Unspecified',ispCount:0,srCount:0,value:0,matched:0};if(p.role==='ISP')rec.ispCount++;else rec.srCount++;let val=sales.get(m+'|'+p.id);if(val!=null){rec.value+=val;rec.matched++}typeCounts.set(key,rec)}
+let types=[...typeCounts.values()].map(r=>({...r,staffCount:r.ispCount+r.srCount,productivity:r.matched?r.value/r.matched:null}));
+return {months:ms,people:roster,zsm:zs,out,types,pending:[...pending.values()],quality,masterCount:people.size,generated:new Date().toISOString(),notes:warnings}}
+let DATA=window.__AREA_DATA__||null,tab='summary';
+const COLS={zsm:[['ZSM','name'],['Sales Value (₹)','value'],['Target (₹)','target'],['Achievement','ach'],['Non Uploaded IMEI','nonUploaded']],people:[['Month','month'],['V-Work ID','id'],['ISP Name','name'],['Role','role'],['ZSM','zsm'],['Store Type','type'],['DOJ','doj'],['Ageing','age'],['Sales Value (₹)','value'],['Productivity','grade']],types:[['Month','month'],['ZSM','zsm'],['Store Type','type'],['ISP Count','ispCount'],['Sr ISP Count','srCount'],['Total Manpower','staffCount'],['Sales Value (₹)','value'],['Mapped Staff','matched'],['Avg Productivity (₹)','productivity']],out:[['Month','month'],['Store Code','code'],['Outlet','name'],['ZSM','zsm'],['Store Type','type'],['Sales Value (₹)','value'],['IMEI Count','imei'],['Mapped Staff','staffCount']]};
+const MONEY=new Set(['value','target','productivity','avg','total','gap']);
+function table(rows,cols,limit=70){return '<div class="scroll"><table><thead><tr>'+cols.map(c=>'<th>'+esc(c[0])+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(0,limit).map(r=>'<tr>'+cols.map(c=>{let k=c[1],v=r[k];return '<td>'+esc(v==null?'N/A':k==='ach'?pct(v):MONEY.has(k)?inr(v):v)+'</td>'}).join('')+'</tr>').join('')+'</tbody></table></div>'+(rows.length>limit?'<p class="muted">Showing '+limit+' of '+fmt(rows.length)+' rows. Download CSV for the complete list.</p>':'')}
+function current(){let m=$('month').value,z=$('zsm').value;let f=x=>(m==='ALL'||x.month===m)&&(z==='ALL'||norm(x.zsm||x.name)===norm(z));let zz=DATA.zsm.filter(f).map(r=>{let p=DATA.pending.find(x=>x.month===r.month&&norm(x.zsm)===norm(r.name));return {...r,nonUploaded:p?.nonUploaded||0}});return {people:DATA.people.filter(f),zsm:zz,out:DATA.out.filter(f),types:DATA.types.filter(f),pending:DATA.pending.filter(f)}}
+function actions(d){let a=[];for(let p of d.people){if(p.role==='ISP'&&p.grade==='Low')a.push({zsm:p.zsm,priority:'High',subject:p.name,issue:'ISP productivity below ₹8,00,000',productivity:p.value,action:'Coach on conversion and review outlet potential',gap:Math.max(0,800000-p.value)})}for(let z of d.zsm){if(z.target!=null&&z.target>0&&z.value<z.target)a.push({zsm:z.name,priority:'High',subject:z.name,issue:'ZSM sales-value target gap',productivity:null,action:'Prioritize recovery across mapped outlets',gap:Math.max(0,z.target-z.value)})}return a}
+const ACTION_COLS=[['ZSM','zsm'],['Priority','priority'],['Subject','subject'],['Issue','issue'],['VBA Productivity (₹)','productivity'],['Recommended Action','action'],['Value Gap (₹)','gap']];
+
+function compactMoney(n){
+ if(n==null||!Number.isFinite(Number(n)))return 'N/A';
+ const v=Number(n);
+ if(Math.abs(v)>=10000000)return '₹'+(v/10000000).toFixed(2)+' Cr';
+ if(Math.abs(v)>=100000)return '₹'+(v/100000).toFixed(2)+' L';
+ if(Math.abs(v)>=1000)return '₹'+(v/1000).toFixed(1)+' K';
+ return '₹'+fmt(v);
+}
+function barChart(title,subtitle,rows,labelKey,valueKey,formatter=compactMoney,limit=8){
+ const list=(rows||[]).filter(r=>Number.isFinite(Number(r[valueKey]))).slice().sort((a,b)=>Number(b[valueKey])-Number(a[valueKey])).slice(0,limit);
+ if(!list.length)return '<div class="chart-card"><div class="chart-title">'+esc(title)+'</div><div class="chart-subtitle">'+esc(subtitle)+'</div><div class="muted">No mapped data available for this selection.</div></div>';
+ const max=Math.max(1,...list.map(r=>Number(r[valueKey])||0));
+ return '<div class="chart-card"><div class="chart-title">'+esc(title)+'</div><div class="chart-subtitle">'+esc(subtitle)+'</div><div class="bar-list">'+list.map(r=>{
+ const v=Number(r[valueKey])||0, width=Math.max(v>0?1:0,v/max*100);
+ return '<div class="bar-row"><div class="bar-label" title="'+esc(r[labelKey]??'Unspecified')+'">'+esc(r[labelKey]??'Unspecified')+'</div><div class="bar-track"><div class="bar-fill" style="width:'+width+'%"></div></div><div class="bar-value">'+esc(formatter(v))+'</div></div>';
+ }).join('')+'</div><div class="legend"><span>Sales value</span><span>Ranked highest to lowest</span></div></div>';
+}
+function tenureChart(isp){
+ const rows=ageBands.map(ageName=>{const g=isp.filter(p=>p.age===ageName),mapped=g.filter(p=>p.value!=null);return {age:ageName,count:g.length,avg:mapped.length?mapped.reduce((s,p)=>s+p.value,0)/mapped.length:0}});
+ return barChart('Average sales by tenure','Average handset sales value for employees with mapped sales',rows,'age','avg',compactMoney,7);
+}
+function show(){if(!DATA){$('content').innerHTML='<div class="empty">Upload your completed Excel workbook in HO to display the report.</div>';return}let d=current(),isp=d.people.filter(p=>p.role==='ISP'),value=d.zsm.reduce((a,b)=>a+b.value,0),targets=d.zsm.filter(z=>z.target!=null),pendingU=d.pending.reduce((a,b)=>a+b.nonUploaded,0),low=isp.filter(p=>p.grade==='Low'),mapped=isp.filter(p=>p.value!=null);let totalTarget=targets.reduce((a,b)=>a+b.target,0),actualForTarget=targets.reduce((a,b)=>a+b.value,0);let kpis=[['Sales Value',inr(value)],['Value Target Achievement',totalTarget?pct(actualForTarget/totalTarget*100):'N/A'],['Low Productivity ISPs',low.length],['ISPs with Sales Value',mapped.length+' / '+isp.length],['Non Uploaded IMEI',pendingU]];let h='<div class="cards">'+kpis.map(x=>'<div class="kpi"><small>'+esc(x[0])+'</small><strong>'+esc(x[1])+'</strong></div>').join('')+'</div>';
+if(tab==='summary'){h+='<div class="chart-grid">'+barChart('Sales contribution by ZSM','Top ZSMs by recorded handset sales value',d.zsm,'name','value')+barChart('Target achievement by ZSM','Achievement percentage where a named target is mapped',d.zsm.filter(z=>z.ach!=null),'name','ach',v=>pct(v))+'</div><h2>ZSM performance detail</h2>'+table(d.zsm.sort((a,b)=>b.value-a.value),COLS.zsm)+'<p class="muted">A ZSM target requires a matching named ZSM row in the Target sheet. Target is never inferred from handset volume.</p>';}
+if(tab==='productivity')h+='<h2>ISP productivity — handset sales value</h2>'+table(isp.sort((a,b)=>(a.value??Infinity)-(b.value??Infinity)),COLS.people)+'<p class="muted">Low: below ₹8,00,000 · Average: ₹8,00,000–₹15,00,000 · Top: above ₹15,00,000. Sales require IMEI, activation date, handset value and mapped employee ID.</p>';
+if(tab==='ageing'){let rows=ageBands.map(a=>{let group=isp.filter(p=>p.age===a),valid=group.filter(p=>p.value!=null),total=valid.reduce((s,p)=>s+p.value,0);return {age:a,count:group.length,mapped:valid.length,total,avg:valid.length?Math.round(total/valid.length):null,low:valid.filter(p=>p.grade==='Low').length,top:valid.filter(p=>p.grade==='Top').length}});h+='<div class="chart-grid">'+tenureChart(isp)+barChart('Employee count by tenure','Roster count in each tenure cohort',rows,'age','count',v=>fmt(v),7)+'</div><h2>ISP tenure performance detail</h2>'+table(rows,[['Tenure Performance','age'],['ISP Count','count'],['With Sales Value','mapped'],['Sales Value (₹)','total'],['Average Productivity (₹)','avg'],['Low ISPs','low'],['Top ISPs','top']])}
+if(tab==='outlets')h+='<div class="chart-grid">'+barChart('Sales by store type','Total handset sales value by outlet category',d.types,'type','value')+barChart('Manpower by store type','Active mapped ISP and Sr ISP headcount',d.types,'type','staffCount',v=>fmt(v))+'</div><h2>Store-type manpower and productivity</h2>'+table(d.types.sort((a,b)=>b.value-a.value),COLS.types)+'<p class="muted">Store-type headcount is taken from the active VBA roster. Sales value uses mapped ISP / Sr ISP transactions; average productivity is based on employees with mapped sales. Unmapped staff are excluded from the average, not treated as zero.</p><h2>Outlet sales value</h2>'+table(d.out.sort((a,b)=>b.value-a.value),COLS.out);
+if(tab==='actions')h+='<h2>ZSM action plans</h2>'+table(actions(d),ACTION_COLS);
+$('content').innerHTML=h+'<p class="muted">Non Uploaded IMEI counts cover only supplied records with a missing upload date. N/A means the required value or target was not supplied or matched. For ISP actions, Value Gap is the difference to the ₹8,00,000 productivity threshold; for ZSM actions it is the outstanding named target value.</p>'}
+function populate(){let pm=$('month').value,pz=$('zsm').value,ms=DATA?.months||[],zs=[...new Set((DATA?.zsm||[]).map(x=>x.name))].sort();$('month').innerHTML='<option value="ALL">All months</option>'+ms.map(x=>'<option>'+esc(x)+'</option>').join('');$('month').value=ms.includes(pm)?pm:ms[0]||'ALL';$('zsm').innerHTML=DATA?.lockedZsm?zs.map(x=>'<option>'+esc(x)+'</option>').join(''):'<option value="ALL">All ZSMs</option>'+zs.map(x=>'<option>'+esc(x)+'</option>').join('');$('zsm').value=DATA?.lockedZsm?DATA.lockedZsm:(zs.includes(pz)?pz:'ALL');let zsExport=$('zsmExport');if(zsExport){let old=zsExport.value;zsExport.innerHTML='<option value="">Select ZSM</option>'+zs.map(x=>'<option>'+esc(x)+'</option>').join('');zsExport.value=zs.includes(old)?old:''}show()}
+function csv(rows,cols){return [cols.map(x=>x[0]),...rows.map(r=>cols.map(c=>r[c[1]]??''))].map(r=>r.map(v=>'"'+clean(v).replace(/"/g,'""')+'"').join(',')).join('\r\n')}
+function download(name,body,type){let a=document.createElement('a'),url=URL.createObjectURL(new Blob([body],{type}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),4000)}
+function exportCSV(){if(!DATA)return;let d=current(),kind=$('exportType').value,rows,cols;if(kind==='low'){rows=d.people.filter(p=>p.role==='ISP'&&p.grade==='Low');cols=COLS.people}else if(kind==='ageing'){rows=d.people.filter(p=>p.role==='ISP');cols=COLS.people}else if(kind==='zsm'){rows=d.zsm;cols=COLS.zsm}else if(kind==='types'){rows=d.types;cols=COLS.types}else if(kind==='outlets'){rows=d.out;cols=COLS.out}else{rows=actions(d);cols=ACTION_COLS}download('Gujarat_'+kind+'_'+$('month').value+'.csv','\uFEFF'+csv(rows,cols),'text/csv;charset=utf-8')}
+function exportArea(){if(!DATA)return;let html=document.documentElement.outerHTML.replace(/<script id="seed"[^>]*>[\s\S]*?<\/script>/,'<script id="seed">window.__AREA_DATA__='+JSON.stringify(DATA).replace(/</g,'\\u003c')+';<\/script>');html=html.replace(/<section\b[^>]*\bid="uploadPanel"[^>]*>[\s\S]*?<\/section>/i,'').replace(/<button\b[^>]*\bid="areaExport"[^>]*>[\s\S]*?<\/button>/i,'').replace(/<script src="https:\/\/cdn.jsdelivr.net\/npm\/xlsx[^"]*"><\/script>/i,'');download('Gujarat_Area_ViewOnly_Updated.html','<!doctype html>\n'+html,'text/html;charset=utf-8')}
+function exportZsm(){
+ if(!DATA){alert('Upload the Excel workbook first.');return}
+ const selected=$('zsmExport').value, month=$('month').value;
+ if(!selected){alert('Select a ZSM.');return}
+ const normName=norm(selected);
+ const own=(r)=>norm(r.zsm||r.name)===normName;
+ const monthOK=r=>month==='ALL'||r.month===month;
+ const rows=DATA.zsm.filter(monthOK);
+ const grouped=new Map();for(const r of rows)grouped.set(norm(r.name),(grouped.get(norm(r.name))||0)+Number(r.value||0));
+ const sorted=[...grouped.entries()].sort((a,b)=>b[1]-a[1]);
+ const rank=sorted.findIndex(([n])=>n===normName)+1;
+ const filtered={months:DATA.months.filter(m=>month==='ALL'||m===month),people:DATA.people.filter(r=>own(r)&&monthOK(r)),zsm:DATA.zsm.filter(r=>own(r)&&monthOK(r)),out:DATA.out.filter(r=>own(r)&&monthOK(r)),types:DATA.types.filter(r=>own(r)&&monthOK(r)),pending:DATA.pending.filter(r=>own(r)&&monthOK(r)),quality:{},masterCount:0,generated:DATA.generated,notes:[],rank:rank||null,rankTotal:sorted.length,lockedZsm:selected};
+ let html=document.documentElement.outerHTML;
+ html=html.replace(/<script id="seed"[^>]*>[\s\S]*?<\/script>/,'<script id="seed">window.__AREA_DATA__='+JSON.stringify(filtered).replace(/</g,'\\u003c')+';<\/script>');
+ html=html.replace(/<section\b[^>]*\bid="uploadPanel"[^>]*>[\s\S]*?<\/section>/i,'');
+ html=html.replace(/<button\b[^>]*\bid="areaExport"[^>]*>[\s\S]*?<\/button>/i,'');
+ html=html.replace(/<button\b[^>]*\bid="zsmExportBtn"[^>]*>[\s\S]*?<\/button>/i,'');
+ html=html.replace(/<label\b[^>]*\bfor="zsmExport"[^>]*>[\s\S]*?<\/label>\s*<select\b[^>]*\bid="zsmExport"[^>]*>[\s\S]*?<\/select>/i,'');
+ html=html.replace(/<script src="https:\/\/cdn.jsdelivr.net\/npm\/xlsx[^\"]*"><\/script>/i,'');
+ html=html.replace(/<label for="zsm">ZSM<\/label>\s*<select id="zsm">[\s\S]*?<\/select>/i,'<span class="locked-area">Area: '+esc(selected)+'</span><select id="zsm" style="display:none"><option value="'+esc(selected)+'">'+esc(selected)+'</option></select>');
+ html=html.replace('V11 · Head Office','V12 · Confidential ZSM Area');
+ html=html.replace('<section class="panel" id="content"></section>','<section class="panel" id="rankPanel"><strong>Gujarat ZSM Rank: '+(rank||'N/A')+' / '+sorted.length+'</strong><p class="muted">Rank based on sales value for '+esc(month==='ALL'?'all uploaded months':month)+'. No other ZSM data is included in this report.</p></section><section class="panel" id="content"></section>');
+ html=html.replace('if(DATA)populate();else show()','if(DATA)populate();else show()');
+ download('ZSM_'+selected.replace(/[^a-z0-9_-]/gi,'_')+'_'+month+'.html','<!doctype html>\n'+html,'text/html;charset=utf-8');
+}
+
+function boot(){if(DATA?.lockedZsm){for(const id of ['areaExport','zsmExportBtn','zsmExport','uploadPanel']){let el=$(id);if(el)el.remove()}let zl=document.querySelector('label[for="zsmExport"]');if(zl)zl.remove();}document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('selected',x===b));tab=b.dataset.tab;show()});$('month').onchange=show;$('zsm').onchange=show;$('csvBtn').onclick=exportCSV;let ze=$('zsmExportBtn');if(ze)ze.onclick=exportZsm;let ae=$('areaExport');if(ae)ae.onclick=exportArea;let file=$('file');if(file)file.onchange=async()=>{let f=file.files[0];if(!f)return;try{if(typeof XLSX==='undefined'){
+  $('status').textContent='Loading Excel reader…';
+  await new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src='https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js';
+    s.onload=resolve;
+    s.onerror=()=>reject(new Error('Could not load the Excel reader. Check your internet connection or try again later.'));
+    document.head.appendChild(s);
+  });
+  if(typeof XLSX==='undefined')throw Error('Excel reader did not load. Check your internet connection and refresh the page.');
+}$('status').textContent='Reading workbook…';await new Promise(r=>setTimeout(r,20));let book=XLSX.read(await f.arrayBuffer(),{type:'array'}),sheets={};for(let n of ['Target','VBA Details','Activation Sales Data'])sheets[n]=book.Sheets[n]?XLSX.utils.sheet_to_json(book.Sheets[n],{defval:'',raw:true}):[];DATA=parseWorkbook(sheets);$('status').textContent='Loaded '+fmt(DATA.quality.rows)+' activation rows; '+fmt(DATA.masterCount)+' employee records. Missing handset values: '+fmt(DATA.quality.missingValue)+'.';populate()}catch(e){$('status').textContent='Upload error: '+e.message;console.error(e)}};if(DATA)populate();else show()}
+document.addEventListener('DOMContentLoaded',boot);
+</script></body></html>
