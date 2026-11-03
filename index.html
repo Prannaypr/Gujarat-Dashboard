@@ -296,7 +296,33 @@ table { min-width: 680px; }
   body { background: white !important; }
 }
 
-</style></head><body><header><small>vivo Gujarat · Retail Intelligence · V11 · Head Office</small><h1>Gujarat Sales Performance Dashboard</h1><p>Head Office intelligence · Sales performance · Workforce productivity · Outlet trends · Action priorities</p></header><main><section class="panel" id="uploadPanel"><strong>Import monthly sales workbook</strong><p class="muted">Use the three worksheets: Target, VBA Details and Activation Sales Data (with IMEI and Handset Value in INR).</p><input id="file" type="file" accept=".xlsx,.xls"/><p id="status" role="status">Ready to import workbook</p><p class="muted">Workbook required: Excel file with sheets named Target, VBA Details, and Activation Sales Data.</p></section><section class="panel"><div class="toolbar"><label for="month">Month</label><select id="month"><option value="ALL">All months</option></select><label for="zsm">ZSM</label><select id="zsm"><option value="ALL">All ZSMs</option></select><label for="exportType">Download CSV</label><select id="exportType"><option value="low">Low Productivity ISP</option><option value="ageing">All ISP & Ageing</option><option value="zsm">ZSM Sales & Target</option><option value="types">Store Type Summary</option><option value="outlets">Outlet Sales</option><option value="actions">Executable Actions</option></select><button id="csvBtn">Download CSV</button><button id="areaExport" class="primary">Generate Area HTML</button><label for="zsmExport">Individual ZSM</label><select id="zsmExport"><option value="">Select ZSM</option></select><button id="zsmExportBtn" class="primary">Generate Private ZSM HTML</button><button onclick="window.print()">Print</button></div><p class="muted">ISP: Low &lt;₹8,00,000 · Average ₹8,00,000–₹15,00,000 · Top &gt;₹15,00,000. Sr ISP separate. Amounts shown in INR, not lakhs.</p><nav class="tabs"><button data-tab="summary" class="selected">ZSM Performance</button><button data-tab="productivity">LP VBA</button><button data-tab="ageing">Tenure Performance</button><button data-tab="outlets">Outlet Category Performance</button><button data-tab="actions">Executable Actions</button></nav></section><section class="panel" id="content"></section><footer>All productivity and value gaps are review indicators, not automatic personnel decisions.</footer><p class="muted" style="text-align:center;padding:0 12px 18px">GitHub Pages ready · Excel processing runs in your browser; uploaded workbook data is not sent to a server.</p></main><script id="seed">window.__AREA_DATA__=null;</script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script>'use strict';
+
+.auth-shell{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#102238,#176778);display:flex;align-items:center;justify-content:center;padding:18px}
+.auth-card{width:min(440px,100%);background:#fff;border-radius:18px;padding:26px;box-shadow:0 24px 70px #0004;color:#20344a}
+.auth-card h2{margin:0 0 6px;color:#17334b}.auth-card p{color:#64748b;line-height:1.5}
+.auth-card label{display:block;margin:14px 0 6px}.auth-card input{width:100%;padding:12px}
+.auth-card button{width:100%;margin-top:14px;padding:12px}
+.auth-error{color:#b42318!important;font-weight:600;min-height:18px}.auth-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#sessionBar{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap;font-size:12px}
+#sessionBar .role-pill{background:#e8f5f6;color:#166879;border-radius:999px;padding:5px 10px;font-weight:700}
+body.auth-locked{overflow:hidden}
+body.auth-locked main,body.auth-locked header{visibility:hidden}
+</style></head><body class="auth-locked">
+<div id="authGate" class="auth-shell">
+ <section class="auth-card" aria-labelledby="loginTitle">
+  <div style="font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:#168a98;font-weight:800">vivo Gujarat · Gujarat Dashboard</div>
+  <h2 id="loginTitle">Retail Intelligence Login</h2>
+  <p>Sign in with your authorized work account. Access is granted according to your assigned HO, ZSM, ASM or CM role.</p>
+  <form id="loginForm">
+   <label for="loginEmail">Work email</label><input id="loginEmail" type="email" autocomplete="username" required placeholder="name@company.com">
+   <label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter password">
+   <button id="loginBtn" class="primary" type="submit">Sign in securely</button>
+   <p id="authError" class="auth-error" role="alert"></p>
+  </form>
+  <p class="muted">Accounts and role assignments must be provisioned by an administrator in Firebase. Public self-registration is disabled.</p>
+ </section>
+</div>
+<header><small>vivo Gujarat · Retail Intelligence · V11 · Head Office</small><h1>Gujarat Sales Performance Dashboard</h1><p>Head Office intelligence · Sales performance · Workforce productivity · Outlet trends · Action priorities</p><div id="sessionBar" hidden><span id="sessionIdentity"></span><span id="sessionRole" class="role-pill"></span><button id="logoutBtn" type="button">Sign out</button></div></header><main><section class="panel" id="uploadPanel"><strong>Import monthly sales workbook</strong><p class="muted">Use the three worksheets: Target, VBA Details and Activation Sales Data (with IMEI and Handset Value in INR).</p><input id="file" type="file" accept=".xlsx,.xls"/><p id="status" role="status">Ready to import workbook</p><p class="muted">Workbook required: Excel file with sheets named Target, VBA Details, and Activation Sales Data.</p></section><section class="panel"><div class="toolbar"><label for="month">Month</label><select id="month"><option value="ALL">All months</option></select><label for="zsm">ZSM</label><select id="zsm"><option value="ALL">All ZSMs</option></select><label for="exportType">Download CSV</label><select id="exportType"><option value="low">Low Productivity ISP</option><option value="ageing">All ISP & Ageing</option><option value="zsm">ZSM Sales & Target</option><option value="types">Store Type Summary</option><option value="outlets">Outlet Sales</option><option value="actions">Executable Actions</option></select><button id="csvBtn">Download CSV</button><button id="areaExport" class="primary">Open Area View</button><label for="zsmExport">Individual ZSM</label><select id="zsmExport"><option value="">Select ZSM</option></select><button id="zsmExportBtn" class="primary">Open Selected ZSM View</button><button onclick="window.print()">Print</button></div><p class="muted">ISP: Low &lt;₹8,00,000 · Average ₹8,00,000–₹15,00,000 · Top &gt;₹15,00,000. Sr ISP separate. Amounts shown in INR, not lakhs.</p><nav class="tabs"><button data-tab="summary" class="selected">ZSM Performance</button><button data-tab="productivity">LP VBA</button><button data-tab="ageing">Tenure Performance</button><button data-tab="outlets">Outlet Category Performance</button><button data-tab="actions">Executable Actions</button></nav></section><section class="panel" id="content"></section><footer>All productivity and value gaps are review indicators, not automatic personnel decisions.</footer><p class="muted" style="text-align:center;padding:0 12px 18px">Firebase Authentication enabled · Excel processing runs in your browser. Configure Firestore Security Rules before using role-based access for confidential data.</p></main><script id="seed">window.__AREA_DATA__=null;</script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script>'use strict';
 const $=id=>document.getElementById(id),clean=x=>String(x??'').trim(),norm=x=>clean(x).toLowerCase().replace(/[^a-z0-9]/g,''),esc=x=>clean(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),fmt=x=>x==null?'N/A':Number(x).toLocaleString('en-IN',{maximumFractionDigits:0}),inr=x=>x==null?'N/A':'₹'+fmt(x),pct=x=>x==null?'N/A':x.toFixed(1)+'%',cash=x=>{if(x===null||x===undefined||clean(x)==='')return null;let n=Number(String(x).replace(/[₹,\s]/g,''));return Number.isFinite(n)?n:null};
 const get=(r,...names)=>{for(const n of names){const k=Object.keys(r).find(k=>norm(k)===norm(n));if(k!==undefined&&r[k]!==''&&r[k]!=null)return r[k]}return ''};
 const iso=v=>{if(v===null||v===undefined||v==='')return '';if(typeof v==='number'){let d=new Date(Date.UTC(1899,11,30)+Math.floor(v)*86400000);return d.toISOString().slice(0,10)}let s=clean(v);if(/^\d{4}-\d\d-\d\d/.test(s))return s.slice(0,10);let m=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);if(m)return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;let d=new Date(s);return isNaN(d)?'':d.toISOString().slice(0,10)};
@@ -324,7 +350,7 @@ let out=[...stores.values()].map(o=>({...o,staffCount:o.staff.size,staff:undefin
 let typeCounts=new Map();for(let m of ms)for(let p of people.values()){if(!['ISP','Sr ISP'].includes(p.role)||/^(inactive|resigned|left|terminated)$/i.test(p.status))continue;let key=m+'|'+norm(p.zsm)+'|'+norm(p.type||'Unspecified'),rec=typeCounts.get(key)||{month:m,zsm:cname(p.zsm),type:p.type||'Unspecified',ispCount:0,srCount:0,value:0,matched:0};if(p.role==='ISP')rec.ispCount++;else rec.srCount++;let val=sales.get(m+'|'+p.id);if(val!=null){rec.value+=val;rec.matched++}typeCounts.set(key,rec)}
 let types=[...typeCounts.values()].map(r=>({...r,staffCount:r.ispCount+r.srCount,productivity:r.matched?r.value/r.matched:null}));
 return {months:ms,people:roster,zsm:zs,out,types,pending:[...pending.values()],quality,masterCount:people.size,generated:new Date().toISOString(),notes:warnings}}
-let DATA=window.__AREA_DATA__||null,tab='summary';
+let DATA=window.__AREA_DATA__||null,tab='summary',MASTER_DATA=null,viewMode='ho';
 const COLS={zsm:[['ZSM','name'],['Sales Value (₹)','value'],['Target (₹)','target'],['Achievement','ach'],['Non Uploaded IMEI','nonUploaded']],people:[['Month','month'],['V-Work ID','id'],['ISP Name','name'],['Role','role'],['ZSM','zsm'],['Store Type','type'],['DOJ','doj'],['Ageing','age'],['Sales Value (₹)','value'],['Productivity','grade']],types:[['Month','month'],['ZSM','zsm'],['Store Type','type'],['ISP Count','ispCount'],['Sr ISP Count','srCount'],['Total Manpower','staffCount'],['Sales Value (₹)','value'],['Mapped Staff','matched'],['Avg Productivity (₹)','productivity']],out:[['Month','month'],['Store Code','code'],['Outlet','name'],['ZSM','zsm'],['Store Type','type'],['Sales Value (₹)','value'],['IMEI Count','imei'],['Mapped Staff','staffCount']]};
 const MONEY=new Set(['value','target','productivity','avg','total','gap']);
 function table(rows,cols,limit=70){return '<div class="scroll"><table><thead><tr>'+cols.map(c=>'<th>'+esc(c[0])+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(0,limit).map(r=>'<tr>'+cols.map(c=>{let k=c[1],v=r[k];return '<td>'+esc(v==null?'N/A':k==='ach'?pct(v):MONEY.has(k)?inr(v):v)+'</td>'}).join('')+'</tr>').join('')+'</tbody></table></div>'+(rows.length>limit?'<p class="muted">Showing '+limit+' of '+fmt(rows.length)+' rows. Download CSV for the complete list.</p>':'')}
@@ -364,34 +390,50 @@ function populate(){let pm=$('month').value,pz=$('zsm').value,ms=DATA?.months||[
 function csv(rows,cols){return [cols.map(x=>x[0]),...rows.map(r=>cols.map(c=>r[c[1]]??''))].map(r=>r.map(v=>'"'+clean(v).replace(/"/g,'""')+'"').join(',')).join('\r\n')}
 function download(name,body,type){let a=document.createElement('a'),url=URL.createObjectURL(new Blob([body],{type}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),4000)}
 function exportCSV(){if(!DATA)return;let d=current(),kind=$('exportType').value,rows,cols;if(kind==='low'){rows=d.people.filter(p=>p.role==='ISP'&&p.grade==='Low');cols=COLS.people}else if(kind==='ageing'){rows=d.people.filter(p=>p.role==='ISP');cols=COLS.people}else if(kind==='zsm'){rows=d.zsm;cols=COLS.zsm}else if(kind==='types'){rows=d.types;cols=COLS.types}else if(kind==='outlets'){rows=d.out;cols=COLS.out}else{rows=actions(d);cols=ACTION_COLS}download('Gujarat_'+kind+'_'+$('month').value+'.csv','\uFEFF'+csv(rows,cols),'text/csv;charset=utf-8')}
-function exportArea(){if(!DATA)return;let html=document.documentElement.outerHTML.replace(/<script id="seed"[^>]*>[\s\S]*?<\/script>/,'<script id="seed">window.__AREA_DATA__='+JSON.stringify(DATA).replace(/</g,'\\u003c')+';<\/script>');html=html.replace(/<section\b[^>]*\bid="uploadPanel"[^>]*>[\s\S]*?<\/section>/i,'').replace(/<button\b[^>]*\bid="areaExport"[^>]*>[\s\S]*?<\/button>/i,'').replace(/<script src="https:\/\/cdn.jsdelivr.net\/npm\/xlsx[^"]*"><\/script>/i,'');download('Gujarat_Area_ViewOnly_Updated.html','<!doctype html>\n'+html,'text/html;charset=utf-8')}
-function exportZsm(){
+function enterAreaView(){
+ if(viewMode!=='ho'){returnToHo();return}
  if(!DATA){alert('Upload the Excel workbook first.');return}
- const selected=$('zsmExport').value, month=$('month').value;
+ MASTER_DATA=MASTER_DATA||DATA;DATA=MASTER_DATA;viewMode='area';
+ document.querySelector('header small').textContent='vivo Gujarat · Retail Intelligence · Area View';
+ document.querySelector('header h1').textContent='Gujarat Area Sales Performance';
+ document.querySelector('header p').textContent='Area-wide sales performance · Workforce productivity · Outlet trends · Action priorities';
+ const upload=$('uploadPanel');if(upload)upload.style.display='none';
+ $('areaExport').textContent='Return to HO Dashboard';
+ $('zsmExportBtn').textContent='Open Selected ZSM View';
+ $('month').value='ALL';$('zsm').value='ALL';populate();
+}
+function enterZsmView(){
+ if(!DATA){alert('Upload the Excel workbook first.');return}
+ const selected=$('zsmExport').value,month=$('month').value;
  if(!selected){alert('Select a ZSM.');return}
- const normName=norm(selected);
- const own=(r)=>norm(r.zsm||r.name)===normName;
- const monthOK=r=>month==='ALL'||r.month===month;
- const rows=DATA.zsm.filter(monthOK);
- const grouped=new Map();for(const r of rows)grouped.set(norm(r.name),(grouped.get(norm(r.name))||0)+Number(r.value||0));
- const sorted=[...grouped.entries()].sort((a,b)=>b[1]-a[1]);
- const rank=sorted.findIndex(([n])=>n===normName)+1;
- const filtered={months:DATA.months.filter(m=>month==='ALL'||m===month),people:DATA.people.filter(r=>own(r)&&monthOK(r)),zsm:DATA.zsm.filter(r=>own(r)&&monthOK(r)),out:DATA.out.filter(r=>own(r)&&monthOK(r)),types:DATA.types.filter(r=>own(r)&&monthOK(r)),pending:DATA.pending.filter(r=>own(r)&&monthOK(r)),quality:{},masterCount:0,generated:DATA.generated,notes:[],rank:rank||null,rankTotal:sorted.length,lockedZsm:selected};
- let html=document.documentElement.outerHTML;
- html=html.replace(/<script id="seed"[^>]*>[\s\S]*?<\/script>/,'<script id="seed">window.__AREA_DATA__='+JSON.stringify(filtered).replace(/</g,'\\u003c')+';<\/script>');
- html=html.replace(/<section\b[^>]*\bid="uploadPanel"[^>]*>[\s\S]*?<\/section>/i,'');
- html=html.replace(/<button\b[^>]*\bid="areaExport"[^>]*>[\s\S]*?<\/button>/i,'');
- html=html.replace(/<button\b[^>]*\bid="zsmExportBtn"[^>]*>[\s\S]*?<\/button>/i,'');
- html=html.replace(/<label\b[^>]*\bfor="zsmExport"[^>]*>[\s\S]*?<\/label>\s*<select\b[^>]*\bid="zsmExport"[^>]*>[\s\S]*?<\/select>/i,'');
- html=html.replace(/<script src="https:\/\/cdn.jsdelivr.net\/npm\/xlsx[^\"]*"><\/script>/i,'');
- html=html.replace(/<label for="zsm">ZSM<\/label>\s*<select id="zsm">[\s\S]*?<\/select>/i,'<span class="locked-area">Area: '+esc(selected)+'</span><select id="zsm" style="display:none"><option value="'+esc(selected)+'">'+esc(selected)+'</option></select>');
- html=html.replace('V11 · Head Office','V12 · Confidential ZSM Area');
- html=html.replace('<section class="panel" id="content"></section>','<section class="panel" id="rankPanel"><strong>Gujarat ZSM Rank: '+(rank||'N/A')+' / '+sorted.length+'</strong><p class="muted">Rank based on sales value for '+esc(month==='ALL'?'all uploaded months':month)+'. No other ZSM data is included in this report.</p></section><section class="panel" id="content"></section>');
- html=html.replace('if(DATA)populate();else show()','if(DATA)populate();else show()');
- download('ZSM_'+selected.replace(/[^a-z0-9_-]/gi,'_')+'_'+month+'.html','<!doctype html>\n'+html,'text/html;charset=utf-8');
+ MASTER_DATA=MASTER_DATA||DATA;
+ const source=MASTER_DATA,normName=norm(selected),monthOK=r=>month==='ALL'||r.month===month,own=r=>norm(r.zsm||r.name)===normName;
+ const rows=source.zsm.filter(monthOK),grouped=new Map();
+ for(const r of rows)grouped.set(norm(r.name),(grouped.get(norm(r.name))||0)+Number(r.value||0));
+ const sorted=[...grouped.entries()].sort((a,b)=>b[1]-a[1]),rank=sorted.findIndex(([n])=>n===normName)+1;
+ DATA={months:source.months.filter(m=>month==='ALL'||m===month),people:source.people.filter(r=>own(r)&&monthOK(r)),zsm:source.zsm.filter(r=>own(r)&&monthOK(r)),out:source.out.filter(r=>own(r)&&monthOK(r)),types:source.types.filter(r=>own(r)&&monthOK(r)),pending:source.pending.filter(r=>own(r)&&monthOK(r)),quality:source.quality||{},masterCount:0,generated:source.generated,notes:[],rank:rank||null,rankTotal:sorted.length,lockedZsm:selected};
+ viewMode='zsm';tab='summary';
+ document.querySelector('header small').textContent='vivo Gujarat · Retail Intelligence · Confidential ZSM View';
+ document.querySelector('header h1').textContent=selected+' — Sales Performance';
+ document.querySelector('header p').textContent='Confidential individual ZSM report · Sales performance · Workforce productivity · Outlet trends';
+ const upload=$('uploadPanel');if(upload)upload.style.display='none';
+ $('areaExport').textContent='Return to HO Dashboard';$('zsmExportBtn').style.display='none';$('zsmExport').style.display='none';document.querySelector('label[for="zsmExport"]').style.display='none';
+ $('zsm').value=selected;populate();
+ const content=$('content');const rankPanel=document.createElement('section');rankPanel.className='panel';rankPanel.id='rankPanel';rankPanel.innerHTML='<strong>Gujarat ZSM Rank: '+(rank||'N/A')+' / '+sorted.length+'</strong><p class="muted">Rank based on sales value for '+esc(month==='ALL'?'all uploaded months':month)+'. This view only displays '+esc(selected)+' data.</p>';content.parentNode.insertBefore(rankPanel,content);
+}
+function returnToHo(){
+ if(!MASTER_DATA)return;
+ DATA=MASTER_DATA;viewMode='ho';tab='summary';
+ document.querySelector('header small').textContent='vivo Gujarat · Retail Intelligence · V11 · Head Office';
+ document.querySelector('header h1').textContent='Gujarat Sales Performance Dashboard';
+ document.querySelector('header p').textContent='Head Office intelligence · Sales performance · Workforce productivity · Outlet trends · Action priorities';
+ const upload=$('uploadPanel');if(upload)upload.style.display='';
+ const rp=$('rankPanel');if(rp)rp.remove();
+ $('areaExport').textContent='Open Area View';$('zsmExportBtn').style.display='';$('zsmExport').style.display='';document.querySelector('label[for="zsmExport"]').style.display='';
+ populate();
 }
 
-function boot(){if(DATA?.lockedZsm){for(const id of ['areaExport','zsmExportBtn','zsmExport','uploadPanel']){let el=$(id);if(el)el.remove()}let zl=document.querySelector('label[for="zsmExport"]');if(zl)zl.remove();}document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('selected',x===b));tab=b.dataset.tab;show()});$('month').onchange=show;$('zsm').onchange=show;$('csvBtn').onclick=exportCSV;let ze=$('zsmExportBtn');if(ze)ze.onclick=exportZsm;let ae=$('areaExport');if(ae)ae.onclick=exportArea;let file=$('file');if(file)file.onchange=async()=>{let f=file.files[0];if(!f)return;try{if(typeof XLSX==='undefined'){
+function boot(){if(DATA?.lockedZsm){for(const id of ['areaExport','zsmExportBtn','zsmExport','uploadPanel']){let el=$(id);if(el)el.remove()}let zl=document.querySelector('label[for="zsmExport"]');if(zl)zl.remove();}document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('selected',x===b));tab=b.dataset.tab;show()});$('month').onchange=show;$('zsm').onchange=show;$('csvBtn').onclick=exportCSV;let ze=$('zsmExportBtn');if(ze)ze.onclick=enterZsmView;let ae=$('areaExport');if(ae)ae.onclick=()=>{if(viewMode==='ho')enterAreaView();else returnToHo()};let file=$('file');if(file)file.onchange=async()=>{let f=file.files[0];if(!f)return;try{if(typeof XLSX==='undefined'){
   $('status').textContent='Loading Excel reader…';
   await new Promise((resolve,reject)=>{
     const s=document.createElement('script');
@@ -403,4 +445,142 @@ function boot(){if(DATA?.lockedZsm){for(const id of ['areaExport','zsmExportBtn'
   if(typeof XLSX==='undefined')throw Error('Excel reader did not load. Check your internet connection and refresh the page.');
 }$('status').textContent='Reading workbook…';await new Promise(r=>setTimeout(r,20));let book=XLSX.read(await f.arrayBuffer(),{type:'array'}),sheets={};for(let n of ['Target','VBA Details','Activation Sales Data'])sheets[n]=book.Sheets[n]?XLSX.utils.sheet_to_json(book.Sheets[n],{defval:'',raw:true}):[];DATA=parseWorkbook(sheets);$('status').textContent='Loaded '+fmt(DATA.quality.rows)+' activation rows; '+fmt(DATA.masterCount)+' employee records. Missing handset values: '+fmt(DATA.quality.missingValue)+'.';populate()}catch(e){$('status').textContent='Upload error: '+e.message;console.error(e)}};if(DATA)populate();else show()}
 document.addEventListener('DOMContentLoaded',boot);
-</script></body></html>
+</script><script type="module">
+// Firebase Web App configuration for Gujarat Dashboard.
+const firebaseConfig = {
+  apiKey: "AIzaSyAoNc2sYRyIw--0VE72DpTRKM05D4gpZzo",
+  authDomain: "gujarat-dashboard-cd680.firebaseapp.com",
+  projectId: "gujarat-dashboard-cd680",
+  storageBucket: "gujarat-dashboard-cd680.firebasestorage.app",
+  messagingSenderId: "130945892604",
+  appId: "1:130945892604:web:8d459398bb403886251779",
+  measurementId: "G-86VT7GEJC6"
+};
+const gate = document.getElementById("authGate");
+const errorBox = document.getElementById("authError");
+const loginForm = document.getElementById("loginForm");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const sessionBar = document.getElementById("sessionBar");
+let auth, db, initialized = false;
+
+function showError(message) { errorBox.textContent = message; }
+function lock(message = "") {
+  document.body.classList.add("auth-locked");
+  gate.hidden = false;
+  sessionBar.hidden = true;
+  if (message) showError(message);
+}
+function unlock(user, profile) {
+  const role = String(profile.role || "").toUpperCase();
+  const validRoles = ["HO", "ZSM", "ASM", "CM"];
+  if (!validRoles.includes(role)) throw new Error("Your account has no valid role. Contact the administrator.");
+  window.__SECURE_USER__ = {
+    uid: user.uid, email: user.email || "",
+    role, zsm: profile.zsm || "", asm: profile.asm || "", cm: profile.cm || "",
+    active: profile.active === true
+  };
+  if (profile.active !== true) throw new Error("This account is disabled. Contact the administrator.");
+  document.body.classList.remove("auth-locked");
+  gate.hidden = true;
+  sessionBar.hidden = false;
+  document.getElementById("sessionIdentity").textContent = user.email || "Signed in";
+  document.getElementById("sessionRole").textContent = role + " access";
+  window.dispatchEvent(new CustomEvent("secure-login-ready", {detail: window.__SECURE_USER__}));
+}
+async function handleUser(user) {
+  if (!user) {
+    window.__SECURE_USER__ = null;
+    lock();
+    return;
+  }
+  try {
+    const dbSdk = window.__FIREBASE_SDK__;
+    if (!dbSdk?.getDoc || !dbSdk?.doc) throw new Error("Firebase database SDK is not ready. Refresh the page and check your connection.");
+    const snap = await dbSdk.getDoc(dbSdk.doc(db, "users", user.uid));
+    if (!snap.exists()) throw new Error("No role profile found for this account. Ask the administrator to provision your access.");
+    unlock(user, snap.data());
+  } catch (err) {
+    await window.__FIREBASE_SDK__?.signOut?.(auth).catch(()=>{});
+    lock(err.message || "Could not verify your role. Please try again.");
+  }
+}
+try {
+  if (firebaseConfig.apiKey.startsWith("REPLACE_") || firebaseConfig.projectId.startsWith("REPLACE_")) {
+    lock("Setup required: add your Firebase Web App configuration in this HTML file, then enable Email/Password sign-in and create user role profiles in Firestore.");
+    loginBtn.disabled = true;
+  } else {
+    // Dynamic imports allow this page to display a useful error if the network or CDN blocks Firebase.
+    Promise.all([
+      import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"),
+      import("https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"),
+      import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js")
+    ]).then(([appSdk, authSdk, dbSdk]) => {
+      const app = appSdk.initializeApp(firebaseConfig);
+      auth = authSdk.getAuth(app);
+      db = dbSdk.getFirestore(app);
+      initialized = true;
+      window.__FIREBASE_SDK__ = { ...authSdk, ...dbSdk };
+      authSdk.onAuthStateChanged(auth, handleUser);
+    }).catch(err => {
+      lock("Firebase could not load. Check internet access, Firebase CDN availability, and your Firebase config. Details: " + (err?.message || "Unknown loading error."));
+      loginBtn.disabled = true;
+    });
+  }
+} catch (err) {
+  lock("Firebase setup error: " + (err.message || "Check your configuration."));
+}
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!initialized) return showError("Firebase is not configured yet. Follow the setup guide.");
+  loginBtn.disabled = true; loginBtn.textContent = "Signing in…"; showError("");
+  try {
+    const authSdk = window.__FIREBASE_SDK__;
+    if (!authSdk?.signInWithEmailAndPassword) throw new Error("Firebase authentication is not ready. Refresh the page and check the setup guide.");
+    await authSdk.signInWithEmailAndPassword(auth,
+      document.getElementById("loginEmail").value.trim(),
+      document.getElementById("loginPassword").value);
+  } catch (err) {
+    showError(err.code === "auth/invalid-credential" ? "Email or password is incorrect." :
+      err.code === "auth/too-many-requests" ? "Too many attempts. Please wait and try again." :
+      "Sign-in failed. Check your account or contact the administrator.");
+  } finally { loginBtn.disabled = false; loginBtn.textContent = "Sign in securely"; }
+});
+logoutBtn.addEventListener("click", async () => { if (auth && window.__FIREBASE_SDK__?.signOut) await window.__FIREBASE_SDK__.signOut(auth); });
+</script>
+<script>
+(function(){
+  function applyRoleScope(){
+    const u=window.__SECURE_USER__;
+    if(!u)return;
+    const role=u.role;
+    const upload=document.getElementById('uploadPanel');
+    const areaExport=document.getElementById('areaExport');
+    const zsmExportBtn=document.getElementById('zsmExportBtn');
+    const zsmExport=document.getElementById('zsmExport');
+    if(role!=='HO'){
+      if(upload) upload.style.display='none';
+      if(areaExport) areaExport.style.display='none';
+      if(zsmExportBtn) zsmExportBtn.style.display='none';
+      if(zsmExport) zsmExport.style.display='none';
+      const zsmLabel=document.querySelector('label[for="zsmExport"]'); if(zsmLabel) zsmLabel.style.display='none';
+      const zsmSelect=document.getElementById('zsm');
+      if(zsmSelect){
+        zsmSelect.disabled=true;
+        if(role==='ZSM' && u.zsm) zsmSelect.value=u.zsm;
+        else zsmSelect.value='ALL';
+      }
+      // Prevent lower roles from exporting the entire area report.
+      const type=document.getElementById('exportType');
+      if(type && role!=='HO'){
+        [...type.options].forEach(o=>{if(['zsm','outlets'].includes(o.value) && role==='CM')o.disabled=true;});
+      }
+      const status=document.getElementById('status');
+      if(status && role!=='HO') status.textContent='Signed in as '+role+'. Ask HO to publish an approved dataset before using this account. This page currently processes uploaded workbooks locally.';
+    }
+    document.body.dataset.userRole=role;
+  }
+  window.addEventListener('secure-login-ready',applyRoleScope);
+})();
+</script>
+</body></html>
